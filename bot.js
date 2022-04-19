@@ -4,6 +4,7 @@ import logger from 'winston';
 import key from './key.js';
 import Dino from './dino.js';
 import Pair from './pair.js';
+import Game from './cardGame.js'
 
 
 // Configure logger settings
@@ -55,6 +56,13 @@ bot.on('message', function(user, userID, channelID, message, evt) {
         bot.sendMessage({ to: channelID, message: "Successfully paired" });
         break;
       case 'add-pair-channel': Pair.channels.push(getChannelId(args[1])); break;
+      case 'cards': 
+        let deck = new Game()
+        bot.sendMessage({
+          to: channelID,
+          message: `Your card is ${deck.firstCard}. Will the next card be higher or lower?`
+        });
+        break;
       default: bot.sendMessage({ to: channelID, message: "Invalid Command" }); break;
     }
   }
